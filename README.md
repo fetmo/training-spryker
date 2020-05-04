@@ -27,17 +27,17 @@ $ docker exec -it -u nexus training_app bash
 #### Access
 
 ###### Yves
-http://de.www.nxsacademy.local
+http://de.www.training.local
 - Email: spencor.hopkin@spryker.com
 - Password: change123
 
 ###### Zed
-http://de.zed.nxsacademy.local
+http://de.zed.training.local
 - Email: admin@spryker.com
 - Password: change123
 
 ###### Glue
-http://de.glue.nxsacademy.local
+http://de.glue.training.local
 
 ###### Jenkins
 http://localhost:8080  
@@ -78,7 +78,7 @@ Database Name:
 To reach the domains from local, you have to add this entries to your hosts-config:
 
 ```
-127.0.0.1    de.www.nxsacademy.local at.www.nxsacademy.local us.www.nxsacademy.local
-127.0.0.1    de.zed.nxsacademy.local at.zed.nxsacademy.local us.zed.nxsacademy.local
-127.0.0.1    de.glue.nxsacademy.local at.glue.nxsacademy.local us.glue.nxsacademy.local
+127.0.0.1    de.www.training.local at.www.training.local us.www.training.local
+127.0.0.1    de.zed.training.local at.zed.training.local us.zed.training.local
+127.0.0.1    de.glue.training.local at.glue.training.local us.glue.training.local
 ```

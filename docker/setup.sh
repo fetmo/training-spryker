@@ -15,7 +15,7 @@ appcontainer=$(docker ps --filter name=app* -q)
 
 docker cp ../current/. ${appcontainer}:/data/shop/development/current
 
-sleep 12s
+sleep 20s
 
 docker exec -i ${rmqcontainer} rabbitmqctl add_user admin mate20mg
 docker exec -i ${rmqcontainer} rabbitmqctl set_user_tags admin administrator
