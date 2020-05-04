@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\CustomerPriceProduct\Persistence" package="src.Orm.Zed.CustomerPriceProduct.Persistence">
+
+    <table name="pyz_customer_price_product" idMethod="native">
+        <column name="id_customer_price_product" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="customer_number" required="true" type="varchar"/>
+        <column name="product_number" required="true" type="varchar"/>
+        <column name="quantity" required="true" type="integer"/>
+        <column name="price" required="true" type="float"/>
+
+        <id-method-parameter value="pyz_customer_price_product_pk_seq"/>
+    </table>
+</database>

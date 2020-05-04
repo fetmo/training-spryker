@@ -11,6 +11,7 @@ use Pyz\Zed\DataImport\DataImportConfig;
 use Pyz\Zed\Development\Communication\Console\AcceptanceCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\ApiCodeTestConsole;
 use Pyz\Zed\Development\Communication\Console\FunctionalCodeTestConsole;
+use Pyz\Zed\PriceImport\Communication\Console\PriceImportCommand;
 use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
 use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
@@ -300,6 +301,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new SchedulerCleanConsole(),
             new SchedulerSuspendConsole(),
             new SchedulerResumeConsole(),
+
+            //
+            new PriceImportCommand()
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
