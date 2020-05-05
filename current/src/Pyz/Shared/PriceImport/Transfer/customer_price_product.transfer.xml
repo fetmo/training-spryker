@@ -8,6 +8,7 @@
     </transfer>
 
     <transfer name="CustomerPriceProduct">
+        <property name="idCustomerPriceProduct" type="int" />
         <property name="customerNumber" type="string" />
         <property name="productNumber" type="string" />
         <property name="quantity" type="int" />

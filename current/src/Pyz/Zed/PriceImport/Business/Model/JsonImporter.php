@@ -7,6 +7,7 @@ namespace Pyz\Zed\PriceImport\Business\Model;
 use Generated\Shared\Transfer\CustomerPriceProductListTransfer;
 use Generated\Shared\Transfer\CustomerPriceProductTransfer;
 use Pyz\Zed\PriceImport\Persistence\PriceImportEntityManager;
+use Pyz\Zed\PriceImport\Persistence\PriceImportRepository;
 
 class JsonImporter
 {
@@ -16,12 +17,15 @@ class JsonImporter
      */
     private $entityManager;
 
+    private $repository;
+
     /**
      * @param \Pyz\Zed\PriceImport\Persistence\PriceImportEntityManager $entityManager
      */
-    public function __construct(PriceImportEntityManager $entityManager)
+    public function __construct(PriceImportEntityManager $entityManager, PriceImportRepository $reposiory)
     {
         $this->entityManager = $entityManager;
+        $this->repository = $reposiory;
     }
 
     /**
@@ -40,8 +44,11 @@ class JsonImporter
                 $customerPriceProductTransfer = new CustomerPriceProductTransfer();
                 $customerPriceProductTransfer->setCustomerNumber($priceEntry['customer_number']);
                 $customerPriceProductTransfer->setProductNumber($priceEntry['item_number']);
-                $customerPriceProductTransfer->setPrice($price['value']);
                 $customerPriceProductTransfer->setQuantity($price['quantity']);
+
+                $customerPriceProductTransfer = $this->repository->findCustomerPriceByTransfer($customerPriceProductTransfer);
+
+                $customerPriceProductTransfer->setPrice($price['value']);
 
                 $priceList->addItems($customerPriceProductTransfer);
             }
