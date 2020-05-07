@@ -22,8 +22,8 @@ class Publisher
     {
         /** @var CustomerPriceProductTransfer $transfer */
         foreach ($transfers as $transfer) {
-            $transfer->requireItemId();
-            $transfer->requireCustomerId();
+            $transfer->requireProductNumber();
+            $transfer->requireCustomerNumber();
 
             $entries = $this->repository->fetchCustomerPricesByCustomerNoAndProductNo($transfer->getCustomerNumber(), $transfer->getProductNumber());
 
@@ -33,6 +33,8 @@ class Publisher
                 $prices[] = [
                     'quantity' => $model->getQuantity(),
                     'priceInCents' => $model->getPrice(),
+                    #CustomerPriceProductTransfer::QUANTITY => $model->getQuantity(),
+                    #CustomerPriceProductTransfer::PRICE => $model->getPrice(),
                 ];
             }
 

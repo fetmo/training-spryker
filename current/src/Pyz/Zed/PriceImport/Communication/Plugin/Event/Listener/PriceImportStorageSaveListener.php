@@ -29,7 +29,7 @@ class PriceImportStorageSaveListener extends AbstractPlugin implements EventBulk
         /** @var \Generated\Shared\Transfer\CustomerPriceProductListTransfer $importList */
         foreach ($transfers as $importList) {
             /** @var \Generated\Shared\Transfer\CustomerPriceProductTransfer $transfer */
-            foreach ($importList->getImports() as $transfer) {
+            foreach ($importList->getItems() as $transfer) {
                 $this->getFacade()->saveCustomerPriceImport($transfer);
                 $this->getFacade()->triggerEvent(PriceImportEvents::PRICE_IMPORT_STORAGE_SAVE, $transfer);
             }

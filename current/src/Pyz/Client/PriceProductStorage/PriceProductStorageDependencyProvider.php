@@ -7,12 +7,24 @@
 
 namespace Pyz\Client\PriceProductStorage;
 
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Plugin\PriceProductStorageExtension\PriceProductMerchantRelationshipStorageDimensionPlugin;
 use Spryker\Client\PriceProductStorage\PriceProductStorageDependencyProvider as SprykerPriceProductStorageDependencyProvider;
 use Spryker\Client\PriceProductVolume\Plugin\PriceProductStorageExtension\PriceProductVolumeExtractorPlugin;
 
 class PriceProductStorageDependencyProvider extends SprykerPriceProductStorageDependencyProvider
 {
+    const PRICE_IMPORT_CLIENT = 'client price import';
+
+    public function provideServiceLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideServiceLayerDependencies($container);
+
+        $container = $this->addPriceImportClient($container);
+
+        return $container;
+    }
+
     /**
      * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
@@ -21,6 +33,13 @@ class PriceProductStorageDependencyProvider extends SprykerPriceProductStorageDe
         return [
             new PriceProductMerchantRelationshipStorageDimensionPlugin(),
         ];
+    }
+
+    protected function addPriceImportClient(Container $container): Container
+    {
+        $container->set(self::PRICE_IMPORT_CLIENT, $container->getLocator()->priceImport()->client());
+
+        return $container;
     }
 
     /**
