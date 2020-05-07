@@ -6,8 +6,10 @@ namespace Pyz\Zed\PriceImport\Business\Model;
 
 use Generated\Shared\Transfer\CustomerPriceProductListTransfer;
 use Generated\Shared\Transfer\CustomerPriceProductTransfer;
+use Pyz\Zed\PriceImport\Dependency\PriceImportEvents;
 use Pyz\Zed\PriceImport\Persistence\PriceImportEntityManager;
 use Pyz\Zed\PriceImport\Persistence\PriceImportRepository;
+use Spryker\Zed\Event\Business\EventFacadeInterface;
 
 class JsonImporter
 {
@@ -19,13 +21,16 @@ class JsonImporter
 
     private $repository;
 
+    private $eventFacade;
+
     /**
      * @param \Pyz\Zed\PriceImport\Persistence\PriceImportEntityManager $entityManager
      */
-    public function __construct(PriceImportEntityManager $entityManager, PriceImportRepository $reposiory)
+    public function __construct(PriceImportEntityManager $entityManager, PriceImportRepository $reposiory, EventFacadeInterface $eventFacade)
     {
         $this->entityManager = $entityManager;
         $this->repository = $reposiory;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -62,16 +67,6 @@ class JsonImporter
      */
     protected function saveList(CustomerPriceProductListTransfer $priceProductListTransfer)
     {
-        foreach ($priceProductListTransfer->getItems() as $item) {
-            $this->writeEntity($item);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerPriceProductTransfer $customerPriceProductTransfer
-     */
-    protected function writeEntity(CustomerPriceProductTransfer $customerPriceProductTransfer)
-    {
-        $this->entityManager->saveEntity($customerPriceProductTransfer);
+        $this->eventFacade->trigger(PriceImportEvents::PRICE_IMPORT_SAVE, $priceProductListTransfer);
     }
 }
