@@ -32,8 +32,10 @@ class PriceImportStorageReader implements PriceImportStorageReaderInterface
 
     /**
      * @param $idProductAbstract
+     *
+     * @return CustomerPriceProductTransfer[]|array
      */
-    public function findPriceProductAbstractPrices($idProductAbstract)
+    public function findPriceProductAbstractPrices($idProductAbstract): array
     {
         $priceData = [];
 

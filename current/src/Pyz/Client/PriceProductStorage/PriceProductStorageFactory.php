@@ -12,7 +12,7 @@ use Spryker\Client\PriceProductStorage\PriceProductStorageFactory as SprykerPric
 
 class PriceProductStorageFactory extends SprykerPriceProductStorageFactory
 {
-    public function createPriceAbstractStorageReader()
+    public function __createPriceAbstractStorageReader()
     {
         $parentReader = parent::createPriceAbstractStorageReader();
         $client = $this->getPriceImportClient();

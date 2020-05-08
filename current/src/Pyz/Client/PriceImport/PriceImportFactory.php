@@ -5,13 +5,18 @@ namespace Pyz\Client\PriceImport;
 
 
 use Pyz\Client\PriceImport\Storage\PriceImportKeyGenerator;
+use Pyz\Client\PriceImport\Storage\PriceImportKeyGeneratorInterface;
 use Pyz\Client\PriceImport\Storage\PriceImportStorageReader;
+use Pyz\Client\PriceImport\Storage\PriceImportStorageReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class PriceImportFactory extends AbstractFactory
 {
 
-    public function createPriceImportStorageReader()
+    /**
+     * @return \Pyz\Client\PriceImport\Storage\PriceImportStorageReaderInterface
+     */
+    public function createPriceImportStorageReader(): PriceImportStorageReaderInterface
     {
         return new PriceImportStorageReader(
             $this->getRedisClient(),
@@ -19,7 +24,10 @@ class PriceImportFactory extends AbstractFactory
         );
     }
 
-    protected function createPriceImportKeyGenerator()
+    /**
+     * @return \Pyz\Client\PriceImport\Storage\PriceImportKeyGeneratorInterface
+     */
+    protected function createPriceImportKeyGenerator(): PriceImportKeyGeneratorInterface
     {
         return new PriceImportKeyGenerator();
     }

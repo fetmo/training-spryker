@@ -4,6 +4,7 @@
 namespace Pyz\Client\PriceImport;
 
 
+use Generated\Shared\Transfer\CustomerPriceProductTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -12,9 +13,14 @@ use Spryker\Client\Kernel\AbstractClient;
 class PriceImportClient extends AbstractClient
 {
 
-    public function findPriceProductAbstractPrices($idAbstract)
+    /**
+     * @param $idProductAbstract
+     *
+     * @return CustomerPriceProductTransfer[]|array
+     */
+    public function findPriceProductAbstractPrices($idAbstract): array
     {
         return $this->getFactory()->createPriceImportStorageReader()->findPriceProductAbstractPrices($idAbstract);
     }
-    
+
 }

@@ -7,6 +7,7 @@
 
 namespace Pyz\Client\PriceProductStorage;
 
+use Pyz\Client\PriceImport\Plugin\PriceProductCustomerPriceExtractorPlugin;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Plugin\PriceProductStorageExtension\PriceProductMerchantRelationshipStorageDimensionPlugin;
 use Spryker\Client\PriceProductStorage\PriceProductStorageDependencyProvider as SprykerPriceProductStorageDependencyProvider;
@@ -49,6 +50,7 @@ class PriceProductStorageDependencyProvider extends SprykerPriceProductStorageDe
     {
         return [
             new PriceProductVolumeExtractorPlugin(),
+            new PriceProductCustomerPriceExtractorPlugin(),
         ];
     }
 }
