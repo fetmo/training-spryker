@@ -6,8 +6,11 @@ namespace Pyz\Zed\PriceImport\Persistence;
 
 use Generated\Shared\Transfer\CustomerPriceProductListTransfer;
 use Generated\Shared\Transfer\CustomerPriceProductTransfer;
+use Orm\Zed\CustomerPriceProduct\Persistence\Map\PyzCustomerPriceProductTableMap;
 use Orm\Zed\CustomerPriceProduct\Persistence\PyzCustomerPriceProductQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Pyz\Zed\PriceImport\Persistence\PriceImportPersistenceFactory getFactory()
@@ -40,6 +43,16 @@ class PriceImportRepository extends AbstractRepository
         $query = $this->getFactory()->createCustomerPriceProductQuery();
         $query->filterByCustomerNumber($customerNo)
             ->filterByProductNumber($productNo);
+
+        $results = $query->find()->getData();
+
+        return $this->getFactory()->createCustomerPriceProductMapper()->mapResults($results);
+    }
+
+    public function fetchCustomerPricesByAbstractId(int $productAbstractId)
+    {
+        $query = $this->getFactory()->createCustomerPriceProductQuery();
+        $query->filterByProductNumber((string)$productAbstractId);
 
         $results = $query->find()->getData();
 

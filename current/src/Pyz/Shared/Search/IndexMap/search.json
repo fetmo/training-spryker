@@ -35,6 +35,17 @@
         "full-text-boosted": {
           "analyzer": "fulltext_index_analyzer",
           "search_analyzer": "fulltext_search_analyzer"
+        },
+        "customer-prices": {
+          "type": "nested",
+          "properties": {
+            "customer-number": {
+              "type": "keyword"
+            },
+            "price": {
+              "type": "integer"
+            }
+          }
         }
       }
     }

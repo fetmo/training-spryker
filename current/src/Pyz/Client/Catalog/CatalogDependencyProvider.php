@@ -7,6 +7,7 @@
 
 namespace Pyz\Client\Catalog;
 
+use Elastica\Aggregation\Stats;
 use Spryker\Client\Catalog\CatalogDependencyProvider as SprykerCatalogDependencyProvider;
 use Spryker\Client\Catalog\Plugin\ConfigTransferBuilder\AscendingNameSortConfigTransferBuilderPlugin;
 use Spryker\Client\Catalog\Plugin\ConfigTransferBuilder\CategoryFacetConfigTransferBuilderPlugin;
@@ -55,6 +56,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new PriceFacetConfigTransferBuilderPlugin(),
             new RatingFacetConfigTransferBuilderPlugin(),
             new ProductLabelFacetConfigTransferBuilderPlugin(),
+            //new CustomerPriceFacetConfigTransferBuilderPlugin()
         ];
     }
 
@@ -100,7 +102,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             /**
              * FacetQueryExpanderPlugin needs to be after other query expanders which filters down the results.
              */
-            new FacetQueryExpanderPlugin(),
+            new FacetQueryExpanderPlugin(), // <-- push our aggregation here
         ];
     }
 
@@ -110,7 +112,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function createCatalogSearchResultFormatterPlugins()
     {
         return [
-            new FacetResultFormatterPlugin(),
+            new FacetResultFormatterPlugin(), // <-- use our data here
             new SortedResultFormatterPlugin(),
             new PaginatedResultFormatterPlugin(),
             new CurrencyAwareCatalogSearchResultFormatterPlugin(
@@ -185,3 +187,37 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
         ];
     }
 }
+
+/*
+$custom = new Stats('customer-price');
+
+$custom->setScript(new \Elastica\Script\Script(
+        str_replace("\n", '',
+            "
+            def customerPrice = 0; def defaultPrice = 0;
+            if (params._source.containsKey('customer-prices') ) { 
+                for(priceItem in params._source['customer-prices']) { 
+                    if (priceItem['customer-number'] == params.customerNumber) { 
+                        customerPrice = priceItem['price']; 
+                    } else if (priceItem['customerNumber'] == 'DEFAULT') {
+                        defaultPrice = priceItem['price'];
+                    }
+                } 
+            }
+            
+            if (customerPrice > 0) {
+               return customerPrice;
+            } else {
+               return defaultPrice;
+            }
+            "
+        ),
+        [
+            'customerNumber' => '22'
+        ], 'painless')
+);
+
+$query->addAggregation(
+    $custom
+);
+*/

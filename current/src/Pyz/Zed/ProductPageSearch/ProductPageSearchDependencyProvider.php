@@ -7,9 +7,12 @@
 
 namespace Pyz\Zed\ProductPageSearch;
 
+use Pyz\Shared\ProductPageSearch\ProductPageSearchConfig;
+use Pyz\Zed\PriceImport\Communication\Plugin\ProductPageSearch\CustomerPriceDataLoaderExpanderPlugin;
+use Pyz\Zed\PriceImport\Communication\Plugin\ProductPageSearch\CustomerPriceDataLoaderPlugin;
+use Pyz\Zed\PriceImport\Communication\Plugin\ProductPageSearch\CustomerPriceMapExpanderPlugin;
 use Spryker\Shared\ProductLabelSearch\ProductLabelSearchConfig;
 use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
-use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig;
 use Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageDataExpander\ProductLabelDataLoaderExpanderPlugin;
 use Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageDataLoader\ProductLabelDataLoaderPlugin;
@@ -51,6 +54,8 @@ class ProductPageSearchDependencyProvider extends SprykerProductPageSearchDepend
         $dataExpanderPlugins[ProductPageSearchConfig::PLUGIN_PRODUCT_PRICE_PAGE_DATA] = new PricePageDataLoaderExpanderPlugin();
         $dataExpanderPlugins[ProductPageSearchConfig::PLUGIN_PRODUCT_IMAGE_PAGE_DATA] = new ProductImagePageDataLoaderExpanderPlugin();
 
+        $dataExpanderPlugins[ProductPageSearchConfig::PLUGIN_PRODUCT_CUSTOMER_PRICE_PAGE_DATA] = new CustomerPriceDataLoaderExpanderPlugin();
+
         return $dataExpanderPlugins;
     }
 
@@ -66,6 +71,7 @@ class ProductPageSearchDependencyProvider extends SprykerProductPageSearchDepend
             new ProductLabelMapExpanderPlugin(),
             new ProductReviewMapExpanderPlugin(),
             new ProductListMapExpanderPlugin(),
+            new CustomerPriceMapExpanderPlugin(),
         ];
     }
 
@@ -81,6 +87,7 @@ class ProductPageSearchDependencyProvider extends SprykerProductPageSearchDepend
             new ProductLabelDataLoaderPlugin(),
             new ProductReviewPageDataLoaderPlugin(),
             new ProductListDataLoaderPlugin(),
+            new CustomerPriceDataLoaderPlugin(),
         ];
     }
 
