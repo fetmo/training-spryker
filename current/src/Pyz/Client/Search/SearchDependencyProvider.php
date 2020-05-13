@@ -14,6 +14,17 @@ use Spryker\Client\Search\SearchDependencyProvider as SprykerSearchDependencyPro
 
 class SearchDependencyProvider extends SprykerSearchDependencyProvider
 {
+    const CLIENT_CUSTOMER = 'CUSTOMER_CLIENT';
+
+    public function provideServiceLayerDependencies(Container $container)
+    {
+        $container = parent::provideServiceLayerDependencies($container);
+
+        $container->set(static::CLIENT_CUSTOMER, $container->getLocator()->customer()->client());
+
+        return $container;
+    }
+
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
